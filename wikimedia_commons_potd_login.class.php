@@ -106,7 +106,19 @@ class WikimediaCommonsPotdLogin {
   private static function getPotdUrl( $width ) {
     $width = !empty( $width ) ? absint( $width ) : self::$default_image_width;
 
-    $image_name = self::fetchImageAPI();
+    // Look up for cached image name
+    if ( false === ( $image_name = get_transient( 'wikimedia-commons-potd-file' ) ) ) {
+    	$image_name = self::fetchImageAPI();
+
+      // Store image to cache
+      if ( $image_name ) {
+    	   set_transient(
+           'wikimedia-commons-potd-file',
+           $image_name,
+           4 * HOUR_IN_SECONDS // Store in cache for 4 hours
+         );
+      }
+    }
 
     if ( ! $image_name ) {
       return self::getDefaultImageUrl( $width );
