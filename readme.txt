@@ -22,5 +22,5 @@ https://github.com/simison/WikimediaCommonsPotd
 
 == Changelog ==
 
-= 1.1 =
+= 1.0 =
 Yay! 🖼
